@@ -2,11 +2,16 @@ import { useState, useEffect } from "react";
 
 export default function Effect() {
     const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [inputValue, setinputValue] = useState([]);
 
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/users')
             .then(res => res.json())
-            .then((data) => setUsers(data));
+            .then((data) => {
+                setUsers(data);
+                setFilteredUsers(data); // Initialize filtered users with all users
+            });
     }, []);
 
     useEffect(() => {
@@ -15,15 +20,19 @@ export default function Effect() {
         }
     }, [users]);
 
+    useEffect(() => {
+        const filterUsers = users.filter(user => user.name.toLowerCase().includes(inputValue));
+        setFilteredUsers(filterUsers);
+    }, [inputValue])
+
     const handleChange = (e) => {
-        const filterUsers = users.filter(user => user.name.includes(e.target.value));
-        console.log(filterUsers);
+        setinputValue(e.target.value.toLowerCase());
     };
 
     return (
         <>
             <input type="text" onInput={handleChange} />
-            {users.map(user => <h3 key={user.id}>{user.name}</h3>)}
+            {filteredUsers.map(user => <h3 key={user.id}>{user.name}</h3>)}
         </>
     );
 }
