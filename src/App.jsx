@@ -1,14 +1,16 @@
-import './App.css'
-import Effect from './hooks/Effect/Effect'
-import State from './hooks/State/State'
+import "./App.css";
+import Effect from "./hooks/Effect/Effect";
+import Reducer from "./hooks/Reducer/Reducer";
+import State from "./hooks/State/State";
 
 function App() {
   return (
     <>
-    <Effect />
+      {/* <Effect /> */}
       {/* <State /> */}
+      <Reducer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
